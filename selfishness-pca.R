@@ -42,6 +42,8 @@ plotnScree(nS)
 
 # retaining 3 components
 sq_all.fa3 <- factanal(na.omit(selfish_latent_all), factors=3, rotation="varimax", scores="regression")
+sq_all.fa3
 
 # retaining 2 components
 sq_all.fa2 <- factanal(na.omit(selfish_latent_all), factors=2, rotation="varimax", scores="regression")
+sq_all.fa2 
