@@ -153,3 +153,23 @@ selfish_data <-selfish_data %>%
   rowwise() %>%
     mutate(APSD_NARC = mean(c(APSD4,APSD6,APSD8,APSD9,APSD11,APSD12,APSD13), na.rm=TRUE)*7) %>%
     mutate(APSD_IMP = mean(c(APSD1,APSD3,APSD7,APSD10,APSD14), na.rm=TRUE)*5)
+
+## Inventory of parent and peer attachment (IPPA) - Armsden & Greensberg, 1989; (scale: 0, 1, 2)
+
+#### Parent attachment
+##### Trust (10 items) - 1,2,3r,4,10r,13,14,21,23,24
+##### Communication (10 items) - 5r,6,7r,8,15r, 16,17,20,26,28
+##### Alienation (8 items) - 9r,11r,12r,18r,19r,22r,25r,27r
+
+#compute scores
+selfish_data <- selfish_data %>%
+    mutate_at(vars(IPPAR3,IPPAR5,IPPAR7,IPPAR9,IPPAR10,IPPAR11,IPPAR12,IPPAR15,IPPAR18,IPPAR19,IPPAR22,IPPAR25,IPPAR27,IPPAR32,IPPAR33,IPPAR37,IPPAR38,IPPAR39,IPPAR46,IPPAR50,IPPAR51), car::recode, "0=2; 1=1; 2=0")
+  rowwise() %>%
+  mutate(IPPA_PTRUST = mean(c(IPPAR1,IPPAR2,IPPAR3,IPPAR4,IPPAR10,IPPAR13,IPPAR14,IPPAR21,IPPAR23,IPPAR24), na.rm=TRUE)*10) %>%
+  mutate(IPPA_PCOM = mean(c(IPPAR5,IPPAR6,IPPAR7,IPPAR8,IPPAR15,IPPAR16,IPPAR17,IPPAR20,IPPAR26,IPPAR28), na.rm=TRUE)*10) %>%
+  mutate(IPPA_PALIEN = mean(c(IPPAR9,IPPAR11,IPPAR12,IPPAR18,IPPAR19,IPPAR22,IPPAR25,IPPAR27), na.rm=TRUE)*8) %>%
+  mutate(IPPA_PA_tot = sum(IPPA_PTRUST, IPPA_PCOM,IPPA_PALIEN, na.rm=TRUE)) %>%
+  mutate(IPPA_PETRUST = mean(c(IPPAR33,IPPAR34,IPPAR36,IPPAR40,IPPAR41,IPPAR42,IPPAR43,IPPAR47,IPPAR48,IPPAR49), na.rm=TRUE)*10) %>%
+  mutate(IPPA_PECOM = mean(c(IPPAR29,IPPAR30,IPPAR31,IPPAR35,IPPAR44,IPPAR45,IPPAR52,IPPAR53), na.rm=TRUE)*8) %>%
+  mutate(IPPA_PEALIEN = mean(c(IPPAR32,IPPAR37,IPPAR38,IPPAR39,IPPAR46,IPPAR50,IPPAR51), na.rm=TRUE)*7) %>%
+  mutate(IPPA_PE_tot = sum(IPPA_PETRUST, IPPA_PECOM, IPPA_PALIEN, na.rm=TRUE))
