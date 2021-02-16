@@ -28,3 +28,28 @@ selfish_data_females <- selfish_data_clean %>%
 
 selfish_data_congru <- selfish_data_clean %>%
   filter(CAREGIVERSEX == SEX)
+
+  ## load, merge previous datas
+  w1 <- file.path("/Users/mellyzors/Desktop/ICU_APSD_W1.csv")
+
+  read.csv(w1, stringsAsFactors = FALSE)
+
+  WAVE1 <- read.csv(w1, stringsAsFactors = FALSE)
+
+  w2 <- file.path("/Users/mellyzors/Desktop/ICU_APSD_W2.csv")
+
+  read.csv(w2, stringsAsFactors = FALSE)
+
+  WAVE2 <- read.csv(w2, stringsAsFactors = FALSE)
+
+  WAVE1WAVE2 <- merge(WAVE1, WAVE2, by="FUV3ID", all = TRUE)
+
+  selfish_data_clean2 <- merge(WAVE1WAVE2, selfish_data_clean,
+                by="FUV3ID", all = TRUE)
+
+  #drop cases without w3 data
+  library(tidyr)
+  selfish_data_clean2_w3 <- selfish_data_clean2 %>% drop_na(pICU)
+
+  #save file
+  write.csv(selfish_data_clean2_w3,"/Users/mellyzors/Desktop/fathering/selfish_data_clean2_w3.csv", row.names = FALSE)
