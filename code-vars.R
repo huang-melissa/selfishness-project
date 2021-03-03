@@ -31,7 +31,7 @@ selfish_data <- selfish_data %>%
 
 
 ## Alabama Parenting Questionnaire (APQ) Frick, 1991; 42 items
-### 5 point likert scale: 1 (Never), 1 (Almost Never), 3 (Sometimes), 4 (Often), 5 (Always).
+### 5 point likert scale: 1 (Never), 2 (Almost Never), 3 (Sometimes), 4 (Often), 5 (Always).
 
 ### Involvement (1, 4, 7, 9, 11, 14, 15, 20, 23, 26) 10 items.
 ### Positive Parenting (2, 5, 13, 16, 18, 27) 6 items.
@@ -47,16 +47,34 @@ selfish_data <- selfish_data %>%
 #### Higher scores in the negative scales indicate inefficient practices
 #### Other Discipline Practices is not a scale, but provides information on an item by item basis
 
+#reverse code positive items for selfish project analysis
+selfish_data$APQ1r <- car::recode(selfish_data$APQ1, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ4r <- car::recode(selfish_data$APQ4, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ7r <- car::recode(selfish_data$APQ7, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ9r <- car::recode(selfish_data$APQ9, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ11r <- car::recode(selfish_data$APQ11, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ14r <- car::recode(selfish_data$APQ14, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ15r <- car::recode(selfish_data$APQ15, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ20r <- car::recode(selfish_data$APQ20, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ23r <- car::recode(selfish_data$APQ23, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ26r <- car::recode(selfish_data$APQ26, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ2r <- car::recode(selfish_data$APQ2, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ5r <- car::recode(selfish_data$APQ5, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ13r <- car::recode(selfish_data$APQ13, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ16r <- car::recode(selfish_data$APQ16, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ18r <- car::recode(selfish_data$APQ18, "1=5; 2=4; 3=3; 4=2; 5=1")
+selfish_data$APQ27r <- car::recode(selfish_data$APQ27, "1=5; 2=4; 3=3; 4=2; 5=1")
+
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(APQ_INV = mean(c(APQ1, APQ4, APQ7, APQ9, APQ11, APQ14, APQ15, APQ20, APQ23, APQ26), na.rm=TRUE)*10) %>%
-    mutate(APQ_PP = mean(c(APQ2, APQ5, APQ13, APQ16, APQ18, APQ27), na.rm=TRUE)*6) %>%
-    mutate(APQ_PMS = mean(c(APQ6, APQ10, APQ17, APQ19, APQ21, APQ24, APQ28, APQ29, APQ30, APQ32), na.rm=TRUE)*10) %>%
-    mutate(APQ_ID = mean(c(APQ3, APQ8, APQ12, APQ22, APQ25, APQ31), na.rm=TRUE)*6) %>%
-    mutate(APQ_CP = mean(c(APQ33, APQ35, APQ38), na.rm=TRUE)*3) %>%
-    mutate(APQ_OT = mean(c(APQ34, APQ36, APQ37, APQ39, APQ40, APQ41, APQ42), na.rm=TRUE)*7) %>%
-    mutate(APQ_POSITIVE = sum(APQ_INV, APQ_PP, na.rm=TRUE)) %>%
-    mutate(APQ_NEGATIVE = sum(APQ_PMS, APQ_ID, APQ_CP, na.rm=TRUE))
+  mutate(APQ_INVr = mean(c(APQ1r, APQ4r, APQ7r, APQ9r, APQ11r, APQ14r, APQ15r, APQ20r, APQ23r, APQ26r), na.rm=TRUE)*10) %>%
+  mutate(APQ_PPr = mean(c(APQ2r, APQ5r, APQ13r, APQ16r, APQ18r, APQ27r), na.rm=TRUE)*6) %>%
+  mutate(APQ_PMS = mean(c(APQ6, APQ10, APQ17, APQ19, APQ21, APQ24, APQ28, APQ29, APQ30, APQ32), na.rm=TRUE)*10) %>%
+  mutate(APQ_ID = mean(c(APQ3, APQ8, APQ12, APQ22, APQ25, APQ31), na.rm=TRUE)*6) %>%
+  mutate(APQ_CP = mean(c(APQ33, APQ35, APQ38), na.rm=TRUE)*3) %>%
+  mutate(APQ_OT = mean(c(APQ34, APQ36, APQ37, APQ39, APQ40, APQ41, APQ42), na.rm=TRUE)*7) %>%
+  mutate(APQ_POSITIVEr = sum(APQ_INVr, APQ_PPr, na.rm=TRUE)) %>%
+  mutate(APQ_NEGATIVE = sum(APQ_PMS, APQ_ID, APQ_CP, na.rm=TRUE))
 
 
 ## Inventory of Callous Unemotional Traits (ICU) Frick, 2004; 24 items(scale: 0 through 3)
@@ -91,18 +109,18 @@ selfish_data$P_ICU24r <- car::recode(selfish_data$P_ICU24, "0=3; 1=2; 2=1; 3=0")
 #original
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(pICU_CA = mean(c(P_ICU4,P_ICU8r,P_ICU9,P_ICU18,P_ICU11,P_ICU21,P_ICU7,P_ICU20,P_ICU2,P_ICU10,P_ICU12), na.rm=TRUE)*11) %>%
-    mutate(pICU_UC = mean(c(P_ICU15r,P_ICU23r,P_ICU16r,P_ICU3r,P_ICU17r,P_ICU24r,P_ICU13r,P_ICU5r), na.rm=TRUE)*8) %>%
-    mutate(pICU_UE = mean(c(P_ICU1r,P_ICU19r,P_ICU6,P_ICU22,P_ICU14r), na.rm=TRUE)*5) %>%
-    mutate(pICU = sum(pICU_CA,pICU_UC,pICU_UE, na.rm=TRUE))
+  mutate(pICU_CA = mean(c(P_ICU4,P_ICU8r,P_ICU9,P_ICU18,P_ICU11,P_ICU21,P_ICU7,P_ICU20,P_ICU2,P_ICU10,P_ICU12), na.rm=TRUE)*11) %>%
+  mutate(pICU_UC = mean(c(P_ICU15r,P_ICU23r,P_ICU16r,P_ICU3r,P_ICU17r,P_ICU24r,P_ICU13r,P_ICU5r), na.rm=TRUE)*8) %>%
+  mutate(pICU_UE = mean(c(P_ICU1r,P_ICU19r,P_ICU6,P_ICU22,P_ICU14r), na.rm=TRUE)*5) %>%
+  mutate(pICU = sum(pICU_CA,pICU_UC,pICU_UE, na.rm=TRUE))
 
 #new factor
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(pICU_CA_newf = mean(c(P_ICU4,P_ICU7,P_ICU9,P_ICU11,P_ICU12,P_ICU18,P_ICU20), na.rm=TRUE)*7) %>%
-    mutate(pICU_UC_newf = mean(c(P_ICU3r,P_ICU5r,P_ICU13r,P_ICU15r,P_ICU16r,P_ICU17r,P_ICU23r,P_ICU24r), na.rm=TRUE)*8) %>%
-    mutate(pICU_UE_newf = mean(c(P_ICU1r,P_ICU14r,P_ICU19r,P_ICU22), na.rm=TRUE)*4) %>%
-    mutate(pICU_newf = sum(pICU_CA_newf,pICU_UC_newf,pICU_UE_newf, na.rm=TRUE))
+  mutate(pICU_CA_newf = mean(c(P_ICU4,P_ICU7,P_ICU9,P_ICU11,P_ICU12,P_ICU18,P_ICU20), na.rm=TRUE)*7) %>%
+  mutate(pICU_UC_newf = mean(c(P_ICU3r,P_ICU5r,P_ICU13r,P_ICU15r,P_ICU16r,P_ICU17r,P_ICU23r,P_ICU24r), na.rm=TRUE)*8) %>%
+  mutate(pICU_UE_newf = mean(c(P_ICU1r,P_ICU14r,P_ICU19r,P_ICU22), na.rm=TRUE)*4) %>%
+  mutate(pICU_newf = sum(pICU_CA_newf,pICU_UC_newf,pICU_UE_newf, na.rm=TRUE))
 
 
 #SELF-REPORT (YOUTH) VERSION
@@ -123,18 +141,18 @@ selfish_data$ICU24r <- car::recode(selfish_data$ICU24, "0=3; 1=2; 2=1; 3=0")
 #original
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(ICU_CA = mean(c(ICU4,ICU8r,ICU9,ICU18,ICU11,ICU21,ICU7,ICU20,ICU2,ICU10,ICU12), na.rm=TRUE)*11) %>%
-    mutate(ICU_UC = mean(c(ICU15r,ICU23r,ICU16r,ICU3r,ICU17r,ICU24r,ICU13r,ICU5r), na.rm=TRUE)*8) %>%
-    mutate(ICU_UE = mean(c(ICU1r,ICU19r,ICU6,ICU22,ICU14r), na.rm=TRUE)*5) %>%
-    mutate(ICU = sum(ICU_CA,ICU_UC,ICU_UE, na.rm=TRUE))
+  mutate(ICU_CA = mean(c(ICU4,ICU8r,ICU9,ICU18,ICU11,ICU21,ICU7,ICU20,ICU2,ICU10,ICU12), na.rm=TRUE)*11) %>%
+  mutate(ICU_UC = mean(c(ICU15r,ICU23r,ICU16r,ICU3r,ICU17r,ICU24r,ICU13r,ICU5r), na.rm=TRUE)*8) %>%
+  mutate(ICU_UE = mean(c(ICU1r,ICU19r,ICU6,ICU22,ICU14r), na.rm=TRUE)*5) %>%
+  mutate(ICU = sum(ICU_CA,ICU_UC,ICU_UE, na.rm=TRUE))
 
 #new factor
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(ICU_CA_newf = mean(c(ICU4,ICU7,ICU9,ICU11,ICU12,ICU18,ICU20), na.rm=TRUE)*7) %>%
-    mutate(ICU_UC_newf = mean(c(ICU3r,ICU5r,ICU13r,ICU15r,ICU16r,ICU17r,ICU23r,ICU24r), na.rm=TRUE)*8) %>%
-    mutate(ICU_UE_newf = mean(c(ICU1r,ICU14r,ICU19r,ICU22), na.rm=TRUE)*4) %>%
-    mutate(ICU_newf = sum(ICU_CA_newf,ICU_UC_newf,ICU_UE_newf, na.rm=TRUE))
+  mutate(ICU_CA_newf = mean(c(ICU4,ICU7,ICU9,ICU11,ICU12,ICU18,ICU20), na.rm=TRUE)*7) %>%
+  mutate(ICU_UC_newf = mean(c(ICU3r,ICU5r,ICU13r,ICU15r,ICU16r,ICU17r,ICU23r,ICU24r), na.rm=TRUE)*8) %>%
+  mutate(ICU_UE_newf = mean(c(ICU1r,ICU14r,ICU19r,ICU22), na.rm=TRUE)*4) %>%
+  mutate(ICU_newf = sum(ICU_CA_newf,ICU_UC_newf,ICU_UE_newf, na.rm=TRUE))
 
 
 ## APSD (Antisocial Process Screening Device) Frick & Hare, 2001; 12 items (scale: 0 through 2)
@@ -145,14 +163,14 @@ selfish_data <-selfish_data %>%
 #CAREGIVER VERSION
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(pAPSD_NARC = mean(c(P_APSD4,P_APSD6,P_APSD8,P_APSD9,P_APSD11,P_APSD12,P_APSD13), na.rm=TRUE)*7) %>%
-    mutate(pAPSD_IMP = mean(c(P_APSD1,P_APSD3,P_APSD7,P_APSD10,P_APSD14), na.rm=TRUE)*5)
+  mutate(pAPSD_NARC = mean(c(P_APSD4,P_APSD6,P_APSD8,P_APSD9,P_APSD11,P_APSD12,P_APSD13), na.rm=TRUE)*7) %>%
+  mutate(pAPSD_IMP = mean(c(P_APSD1,P_APSD3,P_APSD7,P_APSD10,P_APSD14), na.rm=TRUE)*5)
 
 #SELF-RERPORT (YOUTH) VERSION
 selfish_data <-selfish_data %>%
   rowwise() %>%
-    mutate(APSD_NARC = mean(c(APSD4,APSD6,APSD8,APSD9,APSD11,APSD12,APSD13), na.rm=TRUE)*7) %>%
-    mutate(APSD_IMP = mean(c(APSD1,APSD3,APSD7,APSD10,APSD14), na.rm=TRUE)*5)
+  mutate(APSD_NARC = mean(c(APSD4,APSD6,APSD8,APSD9,APSD11,APSD12,APSD13), na.rm=TRUE)*7) %>%
+  mutate(APSD_IMP = mean(c(APSD1,APSD3,APSD7,APSD10,APSD14), na.rm=TRUE)*5)
 
 ## Inventory of parent and peer attachment (IPPA) - Armsden & Greensberg, 1989; (scale: 0, 1, 2)
 
@@ -170,3 +188,61 @@ selfish_data <- selfish_data %>%
   mutate(IPPA_PCOM = mean(c(IPPAR5,IPPAR6,IPPAR7,IPPAR8,IPPAR15,IPPAR16,IPPAR17,IPPAR20,IPPAR26,IPPAR28), na.rm=TRUE)*10) %>%
   mutate(IPPA_PALIEN = mean(c(IPPAR9,IPPAR11,IPPAR12,IPPAR18,IPPAR19,IPPAR22,IPPAR25,IPPAR27), na.rm=TRUE)*8) %>%
   mutate(IPPA_PA_tot = sum(IPPA_PTRUST, IPPA_PCOM,IPPA_PALIEN, na.rm=TRUE))
+
+
+
+#run this only after all relevant variables have been coded via codevars.R
+
+#rename variables for readability prior to creating sheet with subset of data
+selfish_data <- selfish_data %>%
+  rename(CAREGIVERSEX = DEMO1) %>%
+  rename(SEX = DEMO2) %>%
+  rename(RACE = DEMO3A) %>%
+  rename(AGE = DEMO6A)
+
+#select relevant variables and filter out those without physio data in wave 3
+selfish_data_clean <- selfish_data %>%
+  select(FUV3ID, CAREGIVERSEX, SEX, RACE, AGE, EGO_SQ, ADAPT_SQ, PATHO_SQ,
+         TOTAL_SQ, APQ_INV, APQ_PP, APQ_PMS, APQ_ID, APQ_CP, APQ_OT, APQ_POSITIVE, APQ_NEGATIVE,
+         pICU_CA, pICU_UC, pICU_UE, pICU, pICU_CA_newf, pICU_UC_newf, pICU_UE_newf, pICU_newf, pAPSD_NARC, pAPSD_IMP, ICU_CA, ICU_UC, ICU_UE, ICU, ICU_CA_newf,
+         ICU_UC_newf, ICU_UE_newf, ICU_newf, APSD_NARC, APSD_IMP, IPPA_PTRUST, IPPA_PCOM, IPPA_PALIEN, IPPA_PA_tot)
+
+head(selfish_data_clean) #take a look at data to see if selection and filter were successful
+
+#save file
+write.csv(selfish_data_clean,"/Users/mellyzors/Desktop/fathering/selfish_data_clean.csv", row.names = FALSE)
+
+#filter & create subsets of data by child sexes OR congruent respondent sexes
+selfish_data_males <- selfish_data_clean %>%
+  filter(SEX == "1")
+
+selfish_data_females <- selfish_data_clean %>%
+  filter(SEX == "2")
+
+selfish_data_congru <- selfish_data_clean %>%
+  filter(CAREGIVERSEX == SEX)
+
+## load, merge previous datas
+w1 <- file.path("/Users/mellyzors/Desktop/ICU_APSD_W1.csv")
+
+read.csv(w1, stringsAsFactors = FALSE)
+
+WAVE1 <- read.csv(w1, stringsAsFactors = FALSE)
+
+w2 <- file.path("/Users/mellyzors/Desktop/ICU_APSD_W2.csv")
+
+read.csv(w2, stringsAsFactors = FALSE)
+
+WAVE2 <- read.csv(w2, stringsAsFactors = FALSE)
+
+WAVE1WAVE2 <- merge(WAVE1, WAVE2, by="FUV3ID", all = TRUE)
+
+selfish_data_clean2 <- merge(WAVE1WAVE2, selfish_data_clean,
+                             by="FUV3ID", all = TRUE)
+
+#drop cases without w3 data
+library(tidyr)
+selfish_data_clean2_w3 <- selfish_data_clean2 %>% drop_na(pICU)
+
+#save file
+write.csv(selfish_data_clean2_w3,"/Users/mellyzors/Desktop/fathering/selfish_data_clean2_w3.csv", row.names = FALSE)
