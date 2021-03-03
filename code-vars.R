@@ -203,7 +203,7 @@ selfish_data <- selfish_data %>%
 #select relevant variables and filter out those without physio data in wave 3
 selfish_data_clean <- selfish_data %>%
   select(FUV3ID, CAREGIVERSEX, SEX, RACE, AGE, EGO_SQ, ADAPT_SQ, PATHO_SQ,
-         TOTAL_SQ, APQ_INV, APQ_PP, APQ_PMS, APQ_ID, APQ_CP, APQ_OT, APQ_POSITIVE, APQ_NEGATIVE,
+         TOTAL_SQ, APQ_INVr, APQ_PPr, APQ_PMS, APQ_ID, APQ_CP, APQ_OT, APQ_POSITIVEr, APQ_NEGATIVE,
          pICU_CA, pICU_UC, pICU_UE, pICU, pICU_CA_newf, pICU_UC_newf, pICU_UE_newf, pICU_newf, pAPSD_NARC, pAPSD_IMP, ICU_CA, ICU_UC, ICU_UE, ICU, ICU_CA_newf,
          ICU_UC_newf, ICU_UE_newf, ICU_newf, APSD_NARC, APSD_IMP, IPPA_PTRUST, IPPA_PCOM, IPPA_PALIEN, IPPA_PA_tot)
 
