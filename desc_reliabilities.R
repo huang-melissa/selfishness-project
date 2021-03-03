@@ -92,3 +92,20 @@ APQ_CP <- master_r %>%
   mutate_all(unclass)
 
 alpha(APQ_CP)
+
+
+#SELFISHNESS QUESTIONNAIRE
+#EGOCENTRIC
+
+SQ_EGO <- master_r %>%
+  select(SQ2, SQ6, SQ10, SQ13, SQ15, SQ18, SQ21, SQ23) %>%
+  mutate_all(unclass)
+
+alpha(SQ_EGO)
+
+#PATHOLOGIC
+SQ_PATHO <- master_r %>%
+  select(SQ3, SQ5, SQ8, SQ11, SQ14, SQ16, SQ19, SQ22) %>%
+  mutate_all(unclass)
+
+alpha(SQ_PATHO)
